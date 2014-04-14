@@ -20,7 +20,7 @@ angular.module('pizzaApp.services', ['ngResource'])
                 query: {method:'GET', params: {}, isArray:true}
             });
     }])
-    .factory('Cart', function () {
+    .service('Cart', function () {
         return {
             create: function (items, total) {
                 return {
@@ -36,7 +36,7 @@ angular.module('pizzaApp.services', ['ngResource'])
             }
         }
     })
-    .factory('OrderItem', function () {
+    .service('OrderItem', function () {
         return {
             create: function (id, name, price, qty) {
                 return {

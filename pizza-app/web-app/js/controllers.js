@@ -59,6 +59,10 @@ angular.module('pizzaApp.controllers', [])
                 }
 
             }
+			
+			$scope.checkout = function () {
+				alert("Sorry - that's all folks!\n");
+			}
         }
     ])
     .controller('AddCtrl', ['$scope', '$rootScope', 'kinds', 'Pizza',
@@ -81,15 +85,15 @@ angular.module('pizzaApp.controllers', [])
                 newPizza.kind = $scope.pizza.kind;
                 newPizza.image = $scope.pizza.image;
                 newPizza.info = $scope.pizza.info;
-                newPizza.price = $scope.pizza.price;
+                newPizza.price = parseFloat($scope.pizza.price);
 
                 newPizza.$save({}, function() {
                     $scope.submited = {
                         type: 'success',
                         msg: 'Pizza added :)'
                     }
-
                     $rootScope.pizzas.unshift(newPizza);
+					resetForm();
                 }, function() {
                     $scope.submited = {
                         type: 'danger',
@@ -99,10 +103,15 @@ angular.module('pizzaApp.controllers', [])
             };
 
             $scope.remove = function (id) {
-                $scope.phone = Pizza.delete({pizzaId: id}, function() {
+                $scope.phone = Pizza.remove({pizzaId: id}, function() {
                     for (var i in $rootScope.pizzas) {
                         if ($rootScope.pizzas[i].id === id) {
                             $rootScope.pizzas.splice(i, 1);
+							
+							$scope.submited = {
+								type: 'warning',
+								msg: 'Pizza deleted'
+							}		
                         }
                     }
                 }, function() {
